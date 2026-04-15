@@ -44,10 +44,6 @@ body {
     left: 0;
 }
 
-.sidebar h3 {
-    margin-top: 0;
-}
-
 .sidebar button {
     width: 100%;
     margin: 8px 0;
@@ -93,7 +89,7 @@ button {
     border: none;
 }
 
-.hidden { display:none; }
+.hidden { display: none; }
 
 .wordlist {
     text-align: left;
@@ -115,7 +111,6 @@ button {
 
 <!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
-    <h3>📚 Õppimine</h3>
     <button onclick="startCards()">📇 Kaardid</button>
     <button onclick="startTest()">📝 Test</button>
     <button onclick="showList()">📖 Sõnaloend</button>
@@ -130,32 +125,34 @@ button {
 
 <!-- CONTENT -->
 <div class="container">
+    <div id="home">
+        <p>Vali õppimisviis menüüst</p>
+    </div>
 
-<div id="home">
-    <p>Vali õppimisviis menüüst</p>
-</div>
+    <div id="cards" class="hidden">
+        <div class="card" id="cardBox" onclick="flipCard()">Laeb...</div>
+        <button onclick="nextCard()">Järgmine</button>
+        <p id="cardInfo"></p>
+    </div>
 
-<div id="cards" class="hidden">
-    <div class="card" id="cardBox" onclick="flipCard()">Laeb...</div>
-    <button onclick="nextCard()">Järgmine</button>
-    <p id="cardInfo"></p>
-</div>
+    <div id="test" class="hidden">
+        <p id="question"></p>
+        <div id="options"></div>
+        <p>Tulemus: <span id="score">0</span></p>
+    </div>
 
-<div id="test" class="hidden">
-    <p id="question"></p>
-    <div id="options"></div>
-    <p>Tulemus: <span id="score">0</span></p>
-</div>
-
-<div id="list" class="hidden">
-    <h3>📖 Sõnaloend</h3>
-    <div id="wordList" class="wordlist"></div>
-</div>
-
+    <div id="list" class="hidden">
+        <h3>📖 Sõnaloend</h3>
+        <div id="wordList" class="wordlist"></div>
+    </div>
 </div>
 
 <script>
-// --- MENÜÜ ---
+// ✅ PARANDUS: HTML‑elemendid defineeritud (vajalik iOS‑is)
+const question = document.getElementById("question");
+const optionsBox = document.getElementById("options");
+const scoreSpan = document.getElementById("score");
+
 function openMenu(){ sidebar.classList.add("open"); }
 function closeMenu(){ sidebar.classList.remove("open"); }
 
@@ -167,7 +164,7 @@ function showOnly(id){
     closeMenu();
 }
 
-// --- SÕNAVARA (laiendatud) ---
+// SÕNAVARA
 const words = [
 {et:"tere", es:"hola"},
 {et:"aitäh", es:"gracias"},
@@ -175,53 +172,30 @@ const words = [
 {et:"jah", es:"sí"},
 {et:"ei", es:"no"},
 {et:"hüvasti", es:"adiós"},
-{et:"vabandust", es:"perdón"},
 {et:"vesi", es:"agua"},
 {et:"toit", es:"comida"},
 {et:"maja", es:"casa"},
 {et:"pere", es:"familia"},
-{et:"töö", es:"trabajo"},
 {et:"sõber", es:"amigo"},
+{et:"töö", es:"trabajo"},
 {et:"raha", es:"dinero"},
 {et:"aeg", es:"tiempo"},
-{et:"armastus", es:"amor"},
-{et:"elu", es:"vida"},
 {et:"hea", es:"bueno"},
 {et:"halb", es:"malo"},
-{et:"ilus", es:"bonito"},
 {et:"suur", es:"grande"},
 {et:"väike", es:"pequeño"},
 {et:"külm", es:"frío"},
 {et:"kuum", es:"caliente"},
-{et:"uus", es:"nuevo"},
-{et:"vana", es:"viejo"},
-{et:"kiire", es:"rápido"},
-{et:"aeglane", es:"lento"},
 {et:"kus", es:"dónde"},
 {et:"mis", es:"qué"},
-{et:"kes", es:"quién"},
-{et:"millal", es:"cuándo"},
 {et:"miks", es:"por qué"},
-{et:"ma söön", es:"como"},
-{et:"ma joon", es:"bebo"},
-{et:"ma lähen", es:"voy"},
-{et:"ma tulen", es:"vengo"},
-{et:"ma näen", es:"veo"},
 {et:"ma tahan", es:"quiero"},
-{et:"ma oskan", es:"puedo"},
-{et:"ma tean", es:"sé"},
-{et:"ma töötan", es:"trabajo"},
-{et:"ma õpin", es:"aprendo"},
-{et:"pood", es:"tienda"},
-{et:"restoran", es:"restaurante"},
-{et:"kool", es:"escuela"},
-{et:"linn", es:"ciudad"},
-{et:"riik", es:"país"},
+{et:"ma saan", es:"puedo"},
 {et:"päev", es:"día"},
 {et:"öö", es:"noche"}
 ];
 
-// --- KAARDID ---
+// KAARDID
 let shuffled = [], index = 0, flipped = false;
 
 function startCards(){
@@ -250,7 +224,7 @@ function nextCard(){
     } else showCard();
 }
 
-// --- TEST ---
+// ✅ TEST – PARANDATUD
 let score = 0, current;
 
 function startTest(){
@@ -271,9 +245,9 @@ function nextQuestion(){
     }
     opts.sort(() => Math.random()-0.5);
 
-    options.innerHTML = opts.map(o =>
-        `<button class="option" onclick="check('${o}')">${o}</button>`
-    ).join("");
+    optionsBox.innerHTML = opts
+        .map(o => `<button class="option" onclick="check('${o}')">${o}</button>`)
+        .join("");
 }
 
 function check(a){
@@ -282,7 +256,7 @@ function check(a){
     nextQuestion();
 }
 
-// --- SÕNALOEND ---
+// SÕNALOEND
 function showList(){
     showOnly("list");
     wordList.innerHTML = words
@@ -292,3 +266,4 @@ function showList(){
 </script>
 </body>
 </html>
+``
