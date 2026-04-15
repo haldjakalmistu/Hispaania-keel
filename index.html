@@ -13,7 +13,6 @@ body {
     color: white;
 }
 
-/* TOP BAR */
 .topbar {
     display: flex;
     align-items: center;
@@ -27,7 +26,6 @@ body {
     margin-right: 12px;
 }
 
-/* SIDEBAR */
 .sidebar {
     position: fixed;
     top: 0;
@@ -40,9 +38,7 @@ body {
     z-index: 10;
 }
 
-.sidebar.open {
-    left: 0;
-}
+.sidebar.open { left: 0; }
 
 .sidebar button {
     width: 100%;
@@ -53,7 +49,6 @@ body {
     font-weight: bold;
 }
 
-/* MAIN */
 .container {
     max-width: 420px;
     margin: auto;
@@ -109,7 +104,6 @@ button {
 
 <body>
 
-<!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
     <button onclick="startCards()">📇 Kaardid</button>
     <button onclick="startTest()">📝 Test</button>
@@ -117,38 +111,38 @@ button {
     <button onclick="closeMenu()">❌ Sulge</button>
 </div>
 
-<!-- TOP -->
 <div class="topbar">
     <div class="menu-btn" onclick="openMenu()">☰</div>
     <strong>🇪🇸 Hispaania õppeäpp</strong>
 </div>
 
-<!-- CONTENT -->
 <div class="container">
-    <div id="home">
-        <p>Vali õppimisviis menüüst</p>
-    </div>
 
-    <div id="cards" class="hidden">
-        <div class="card" id="cardBox" onclick="flipCard()">Laeb...</div>
-        <button onclick="nextCard()">Järgmine</button>
-        <p id="cardInfo"></p>
-    </div>
+<div id="home">
+    <p>Vali õppimisviis menüüst</p>
+</div>
 
-    <div id="test" class="hidden">
-        <p id="question"></p>
-        <div id="options"></div>
-        <p>Tulemus: <span id="score">0</span></p>
-    </div>
+<div id="cards" class="hidden">
+    <div class="card" id="cardBox" onclick="flipCard()">Laeb...</div>
+    <button onclick="nextCard()">Järgmine</button>
+    <p id="cardInfo"></p>
+</div>
 
-    <div id="list" class="hidden">
-        <h3>📖 Sõnaloend</h3>
-        <div id="wordList" class="wordlist"></div>
-    </div>
+<div id="test" class="hidden">
+    <p id="question"></p>
+    <div id="options"></div>
+    <p>Tulemus: <span id="score">0</span></p>
+</div>
+
+<div id="list" class="hidden">
+    <h3>📖 Sõnaloend (100 sõna)</h3>
+    <div id="wordList" class="wordlist"></div>
+</div>
+
 </div>
 
 <script>
-// ✅ PARANDUS: HTML‑elemendid defineeritud (vajalik iOS‑is)
+// ✅ DOM viited (test töötab ka iOS-is)
 const question = document.getElementById("question");
 const optionsBox = document.getElementById("options");
 const scoreSpan = document.getElementById("score");
@@ -164,106 +158,107 @@ function showOnly(id){
     closeMenu();
 }
 
-// SÕNAVARA
+// ✅ 100 SÕNA
 const words = [
-{et:"tere", es:"hola"},
-{et:"aitäh", es:"gracias"},
-{et:"palun", es:"por favor"},
-{et:"jah", es:"sí"},
-{et:"ei", es:"no"},
-{et:"hüvasti", es:"adiós"},
-{et:"vesi", es:"agua"},
-{et:"toit", es:"comida"},
-{et:"maja", es:"casa"},
-{et:"pere", es:"familia"},
-{et:"sõber", es:"amigo"},
-{et:"töö", es:"trabajo"},
-{et:"raha", es:"dinero"},
-{et:"aeg", es:"tiempo"},
-{et:"hea", es:"bueno"},
-{et:"halb", es:"malo"},
-{et:"suur", es:"grande"},
-{et:"väike", es:"pequeño"},
-{et:"külm", es:"frío"},
-{et:"kuum", es:"caliente"},
-{et:"kus", es:"dónde"},
-{et:"mis", es:"qué"},
-{et:"miks", es:"por qué"},
-{et:"ma tahan", es:"quiero"},
-{et:"ma saan", es:"puedo"},
-{et:"päev", es:"día"},
-{et:"öö", es:"noche"}
+{et:"tere",es:"hola"},{et:"aitäh",es:"gracias"},{et:"palun",es:"por favor"},
+{et:"jah",es:"sí"},{et:"ei",es:"no"},{et:"hüvasti",es:"adiós"},
+{et:"vabandust",es:"perdón"},{et:"vesi",es:"agua"},{et:"toit",es:"comida"},
+{et:"maja",es:"casa"},{et:"pere",es:"familia"},{et:"töö",es:"trabajo"},
+{et:"sõber",es:"amigo"},{et:"raha",es:"dinero"},{et:"aeg",es:"tiempo"},
+{et:"armastus",es:"amor"},{et:"elu",es:"vida"},{et:"hea",es:"bueno"},
+{et:"halb",es:"malo"},{et:"ilus",es:"bonito"},{et:"suur",es:"grande"},
+{et:"väike",es:"pequeño"},{et:"külm",es:"frío"},{et:"kuum",es:"caliente"},
+{et:"uus",es:"nuevo"},{et:"vana",es:"viejo"},{et:"kiire",es:"rápido"},
+{et:"aeglane",es:"lento"},{et:"kus",es:"dónde"},{et:"mis",es:"qué"},
+{et:"kes",es:"quién"},{et:"millal",es:"cuándo"},{et:"miks",es:"por qué"},
+{et:"ma söön",es:"como"},{et:"ma joon",es:"bebo"},
+{et:"ma lähen",es:"voy"},{et:"ma tulen",es:"vengo"},
+{et:"ma näen",es:"veo"},{et:"ma kuulen",es:"oigo"},
+{et:"ma räägin",es:"hablo"},{et:"ma töötan",es:"trabajo"},
+{et:"ma õpin",es:"aprendo"},{et:"ma puhkan",es:"descanso"},
+{et:"päev",es:"día"},{et:"öö",es:"noche"},{et:"hommik",es:"mañana"},
+{et:"õhtu",es:"tarde"},{et:"linn",es:"ciudad"},
+{et:"küla",es:"pueblo"},{et:"riik",es:"país"},
+{et:"pood",es:"tienda"},{et:"turg",es:"mercado"},
+{et:"restoran",es:"restaurante"},{et:"kohvik",es:"cafetería"},
+{et:"kool",es:"escuela"},{et:"ülikool",es:"universidad"},
+{et:"õpetaja",es:"profesor"},{et:"õpilane",es:"estudiante"},
+{et:"laps",es:"niño"},{et:"ema",es:"madre"},
+{et:"isa",es:"padre"},{et:"vend",es:"hermano"},
+{et:"õde",es:"hermana"},{et:"auto",es:"coche"},
+{et:"buss",es:"autobús"},{et:"rong",es:"tren"},
+{et:"lennuk",es:"avión"},{et:"tänav",es:"calle"},
+{et:"tee",es:"camino"},{et:"uks",es:"puerta"},
+{et:"aken",es:"ventana"},{et:"voodi",es:"cama"},
+{et:"laud",es:"mesa"},{et:"tool",es:"silla"},
+{et:"raamat",es:"libro"},{et:"telefon",es:"teléfono"},
+{et:"arvuti",es:"ordenador"},{et:"internet",es:"internet"}
 ];
 
 // KAARDID
-let shuffled = [], index = 0, flipped = false;
+let shuffled=[],index=0,flipped=false;
 
 function startCards(){
     showOnly("cards");
-    shuffled = [...words].sort(() => Math.random() - 0.5);
-    index = 0;
-    showCard();
+    shuffled=[...words].sort(()=>Math.random()-0.5);
+    index=0; showCard();
 }
 
 function showCard(){
-    flipped = false;
-    cardBox.innerText = shuffled[index].et;
-    cardInfo.innerText = `${index+1} / ${shuffled.length}`;
+    flipped=false;
+    cardBox.innerText=shuffled[index].et;
+    cardInfo.innerText=`${index+1} / ${shuffled.length}`;
 }
 
 function flipCard(){
-    cardBox.innerText = flipped ? shuffled[index].et : shuffled[index].es;
-    flipped = !flipped;
+    cardBox.innerText=flipped?shuffled[index].et:shuffled[index].es;
+    flipped=!flipped;
 }
 
 function nextCard(){
     index++;
-    if(index >= shuffled.length){
-        alert("Kõik kaardid läbi");
-        showOnly("home");
-    } else showCard();
+    if(index>=shuffled.length){ alert("Kõik kaardid läbi"); showOnly("home"); }
+    else showCard();
 }
 
-// ✅ TEST – PARANDATUD
-let score = 0, current;
+// ✅ TEST
+let score=0,current;
 
 function startTest(){
     showOnly("test");
-    score = 0;
-    scoreSpan.innerText = score;
+    score=0; scoreSpan.innerText=0;
     nextQuestion();
 }
 
 function nextQuestion(){
-    current = words[Math.floor(Math.random()*words.length)];
-    question.innerText = current.et;
+    current=words[Math.floor(Math.random()*words.length)];
+    question.innerText=current.et;
 
-    let opts = [current.es];
-    while(opts.length < 4){
-        let r = words[Math.floor(Math.random()*words.length)].es;
+    let opts=[current.es];
+    while(opts.length<4){
+        let r=words[Math.floor(Math.random()*words.length)].es;
         if(!opts.includes(r)) opts.push(r);
     }
-    opts.sort(() => Math.random()-0.5);
+    opts.sort(()=>Math.random()-0.5);
 
-    optionsBox.innerHTML = opts
-        .map(o => `<button class="option" onclick="check('${o}')">${o}</button>`)
-        .join("");
+    optionsBox.innerHTML=opts.map(o=>
+        `<button class="option" onclick="check('${o}')">${o}</button>`
+    ).join("");
 }
 
 function check(a){
-    if(a === current.es) score++;
-    scoreSpan.innerText = score;
+    if(a===current.es) score++;
+    scoreSpan.innerText=score;
     nextQuestion();
 }
 
 // SÕNALOEND
 function showList(){
     showOnly("list");
-    wordList.innerHTML = words
-        .map(w => `<div class="word"><span>${w.et}</span><strong>${w.es}</strong></div>`)
-        .join("");
+    wordList.innerHTML=words.map(w=>
+        `<div class="word"><span>${w.et}</span><strong>${w.es}</strong></div>`
+    ).join("");
 }
 </script>
 </body>
 </html>
-``
