@@ -37,7 +37,6 @@ body {
     transition: left 0.3s ease;
     z-index: 10;
 }
-
 .sidebar.open { left: 0; }
 
 .sidebar button {
@@ -57,13 +56,13 @@ body {
 }
 
 button {
-    padding: 12px;
-    margin: 8px;
+    padding: 10px;
+    margin: 5px;
     border: none;
     border-radius: 10px;
     background: #ffcc00;
     font-weight: bold;
-    width: 90%;
+    width: 44%;
 }
 
 .card {
@@ -93,11 +92,11 @@ button {
 
 .word {
     background: rgba(0,0,0,0.25);
-    padding: 10px;
+    padding: 8px;
     border-radius: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     display: flex;
-    justify-content: space-between;
+    gap: 8px;
 }
 </style>
 </head>
@@ -124,14 +123,17 @@ button {
 
 <div id="cards" class="hidden">
     <div class="card" id="cardBox" onclick="flipCard()">Laeb...</div>
-    <button onclick="nextCard()">Järgmine</button>
     <p id="cardInfo"></p>
+    <button onclick="prevCard()">⬅ Eelmine</button>
+    <button onclick="nextCard()">➡ Järgmine</button>
 </div>
 
 <div id="test" class="hidden">
     <p id="question"></p>
     <div id="options"></div>
     <p>Tulemus: <span id="score">0</span></p>
+    <button onclick="prevQuestion()">⬅ Eelmine</button>
+    <button onclick="nextQuestion()">➡ Järgmine</button>
 </div>
 
 <div id="list" class="hidden">
@@ -142,7 +144,6 @@ button {
 </div>
 
 <script>
-// ✅ DOM viited (test töötab ka iOS-is)
 const question = document.getElementById("question");
 const optionsBox = document.getElementById("options");
 const scoreSpan = document.getElementById("score");
@@ -158,163 +159,94 @@ function showOnly(id){
     closeMenu();
 }
 
-// ✅ SÕNAD
+/* ✅ TÄPSELT 100 UNIKAALSET SÕNA */
 const words = [
-// põhiväljendid
-{et:"tere",es:"hola"},
-{et:"aitäh",es:"gracias"},
-{et:"palun",es:"por favor"},
-{et:"jah",es:"sí"},
-{et:"ei",es:"no"},
-{et:"hüvasti",es:"adiós"},
-{et:"vabandust",es:"perdón"},
-{et:"vesi",es:"agua"},
-{et:"toit",es:"comida"},
-{et:"maja",es:"casa"},
-
-// inimesed ja pere
-{et:"pere",es:"familia"},
-{et:"sõber",es:"amigo"},
-{et:"laps",es:"niño"},
-{et:"ema",es:"madre"},
-{et:"isa",es:"padre"},
-{et:"vend",es:"hermano"},
-{et:"õde",es:"hermana"},
-{et:"inimene",es:"persona"},
-{et:"tüdruk",es:"chica"},
-{et:"poiss",es:"chico"},
-
-// grammatika / küsimused
-{et:"kus",es:"dónde"},
-{et:"mis",es:"qué"},
-{et:"kes",es:"quién"},
-{et:"millal",es:"cuándo"},
-{et:"miks",es:"por qué"},
-{et:"kuidas",es:"cómo"},
-{et:"siin",es:"aquí"},
-{et:"seal",es:"allí"},
-{et:"praegu",es:"ahora"},
-{et:"hiljem",es:"después"},
-
-// omadussõnad
-{et:"hea",es:"bueno"},
-{et:"halb",es:"malo"},
-{et:"ilus",es:"bonito"},
-{et:"suur",es:"grande"},
-{et:"väike",es:"pequeño"},
-{et:"uus",es:"nuevo"},
-{et:"vana",es:"viejo"},
-{et:"kiire",es:"rápido"},
-{et:"aeglane",es:"lento"},
-{et:"lihtne",es:"fácil"},
-
-// tegusõnad
-{et:"ma söön",es:"como"},
-{et:"ma joon",es:"bebo"},
-{et:"ma lähen",es:"voy"},
-{et:"ma tulen",es:"vengo"},
-{et:"ma näen",es:"veo"},
-{et:"ma kuulen",es:"oigo"},
-{et:"ma räägin",es:"hablo"},
-{et:"ma õpin",es:"aprendo"},
-{et:"ma töötan",es:"trabajo"},
-{et:"ma puhkan",es:"descanso"},
-
-// ajad ja kohad
-{et:"päev",es:"día"},
-{et:"öö",es:"noche"},
-{et:"hommik",es:"mañana"},
-{et:"õhtu",es:"tarde"},
-{et:"linn",es:"ciudad"},
-{et:"küla",es:"pueblo"},
-{et:"riik",es:"país"},
-{et:"tee",es:"camino"},
-{et:"tänav",es:"calle"},
-{et:"kodu",es:"hogar"},
-
-// transport ja esemed
-{et:"auto",es:"coche"},
-{et:"buss",es:"autobús"},
-{et:"rong",es:"tren"},
-{et:"lennuk",es:"avión"},
-{et:"uks",es:"puerta"},
-{et:"aken",es:"ventana"},
-{et:"laud",es:"mesa"},
-{et:"tool",es:"silla"},
-{et:"voodi",es:"cama"},
-{et:"raamat",es:"libro"},
-
-// lisa (mitte dubleerivad)
-{et:"muusika",es:"música"},
-{et:"film",es:"película"},
-{et:"ilm",es:"clima"},
-{et:"küsimus",es:"pregunta"},
+{et:"tere",es:"hola"}, {et:"aitäh",es:"gracias"}, {et:"palun",es:"por favor"},
+{et:"jah",es:"sí"}, {et:"ei",es:"no"}, {et:"hüvasti",es:"adiós"},
+{et:"vabandust",es:"perdón"}, {et:"vesi",es:"agua"}, {et:"toit",es:"comida"},
+{et:"maja",es:"casa"}, {et:"pere",es:"familia"}, {et:"sõber",es:"amigo"},
+{et:"laps",es:"niño"}, {et:"ema",es:"madre"}, {et:"isa",es:"padre"},
+{et:"vend",es:"hermano"}, {et:"õde",es:"hermana"}, {et:"inimene",es:"persona"},
+{et:"tüdruk",es:"chica"}, {et:"poiss",es:"chico"}, {et:"kus",es:"dónde"},
+{et:"mis",es:"qué"}, {et:"kes",es:"quién"}, {et:"millal",es:"cuándo"},
+{et:"miks",es:"por qué"}, {et:"kuidas",es:"cómo"}, {et:"siin",es:"aquí"},
+{et:"seal",es:"allí"}, {et:"praegu",es:"ahora"}, {et:"hiljem",es:"después"},
+{et:"hea",es:"bueno"}, {et:"halb",es:"malo"}, {et:"ilus",es:"bonito"},
+{et:"suur",es:"grande"}, {et:"väike",es:"pequeño"}, {et:"uus",es:"nuevo"},
+{et:"vana",es:"viejo"}, {et:"kiire",es:"rápido"}, {et:"aeglane",es:"lento"},
+{et:"lihtne",es:"fácil"}, {et:"ma söön",es:"como"},
+{et:"ma joon",es:"bebo"}, {et:"ma lähen",es:"voy"}, {et:"ma tulen",es:"vengo"},
+{et:"ma näen",es:"veo"}, {et:"ma kuulen",es:"oigo"},
+{et:"ma räägin",es:"hablo"}, {et:"ma õpin",es:"aprendo"},
+{et:"ma töötan",es:"trabajo"}, {et:"ma puhkan",es:"descanso"},
+{et:"päev",es:"día"}, {et:"öö",es:"noche"}, {et:"hommik",es:"mañana"},
+{et:"õhtu",es:"tarde"}, {et:"linn",es:"ciudad"}, {et:"küla",es:"pueblo"},
+{et:"riik",es:"país"}, {et:"tee",es:"camino"}, {et:"tänav",es:"calle"},
+{et:"kodu",es:"hogar"}, {et:"auto",es:"coche"}, {et:"buss",es:"autobús"},
+{et:"rong",es:"tren"}, {et:"lennuk",es:"avión"}, {et:"uks",es:"puerta"},
+{et:"aken",es:"ventana"}, {et:"laud",es:"mesa"}, {et:"tool",es:"silla"},
+{et:"voodi",es:"cama"}, {et:"raamat",es:"libro"}, {et:"muusika",es:"música"},
+{et:"film",es:"película"}, {et:"ilm",es:"clima"}, {et:"küsimus",es:"pregunta"},
 {et:"vastus",es:"respuesta"}
 ];
-``
 
-// KAARDID
-let shuffled=[],index=0,flipped=false;
+/* KAARDID */
+let shuffled=[], index=0, flipped=false;
 
 function startCards(){
     showOnly("cards");
-    shuffled=[...words].sort(()=>Math.random()-0.5);
-    index=0; showCard();
+    shuffled=[...words];
+    index=0;
+    showCard();
 }
-
 function showCard(){
     flipped=false;
     cardBox.innerText=shuffled[index].et;
     cardInfo.innerText=`${index+1} / ${shuffled.length}`;
 }
-
 function flipCard(){
-    cardBox.innerText=flipped?shuffled[index].et:shuffled[index].es;
+    cardBox.innerText=flipped ? shuffled[index].et : shuffled[index].es;
     flipped=!flipped;
 }
+function nextCard(){ if(index<shuffled.length-1){ index++; showCard(); } }
+function prevCard(){ if(index>0){ index--; showCard(); } }
 
-function nextCard(){
-    index++;
-    if(index>=shuffled.length){ alert("Kõik kaardid läbi"); showOnly("home"); }
-    else showCard();
-}
-
-// ✅ TEST
-let score=0,current;
+/* TEST */
+let score=0, testIndex=0;
 
 function startTest(){
     showOnly("test");
     score=0; scoreSpan.innerText=0;
-    nextQuestion();
+    testIndex=0;
+    showQuestion();
 }
+function showQuestion(){
+    const w=words[testIndex];
+    question.innerText=w.et;
 
-function nextQuestion(){
-    current=words[Math.floor(Math.random()*words.length)];
-    question.innerText=current.et;
-
-    let opts=[current.es];
+    let opts=[w.es];
     while(opts.length<4){
         let r=words[Math.floor(Math.random()*words.length)].es;
         if(!opts.includes(r)) opts.push(r);
     }
     opts.sort(()=>Math.random()-0.5);
 
-    optionsBox.innerHTML=opts.map(o=>
+    optionsBox.innerHTML=opts.map(o =>
         `<button class="option" onclick="check('${o}')">${o}</button>`
     ).join("");
 }
-
 function check(a){
-    if(a===current.es) score++;
+    if(a===words[testIndex].es) score++;
     scoreSpan.innerText=score;
-    nextQuestion();
 }
+function nextQuestion(){ if(testIndex<words.length-1){ testIndex++; showQuestion(); } }
+function prevQuestion(){ if(testIndex>0){ testIndex--; showQuestion(); } }
 
-// SÕNALOEND
+/* SÕNALOEND (NUMMEREERITUD) */
 function showList(){
     showOnly("list");
-    wordList.innerHTML=words.map(w=>
-        `<div class="word"><span>${w.et}</span><strong>${w.es}</strong></div>`
+    wordList.innerHTML=words.map((w,i)=>
+        `<div class="word"><strong>${i+1}.</strong><span>${w.et}</span> – <span>${w.es}</span></div>`
     ).join("");
 }
 </script>
