@@ -158,8 +158,9 @@ function showOnly(id){
     closeMenu();
 }
 
-// ✅ 100 SÕNA
+// ✅ SÕNAD
 const words = [
+// põhiväljendid
 {et:"tere",es:"hola"},
 {et:"aitäh",es:"gracias"},
 {et:"palun",es:"por favor"},
@@ -170,29 +171,44 @@ const words = [
 {et:"vesi",es:"agua"},
 {et:"toit",es:"comida"},
 {et:"maja",es:"casa"},
+
+// inimesed ja pere
 {et:"pere",es:"familia"},
 {et:"sõber",es:"amigo"},
-{et:"raha",es:"dinero"},
-{et:"aeg",es:"tiempo"},
-{et:"armastus",es:"amor"},
-{et:"elu",es:"vida"},
-{et:"hea",es:"bueno"},
-{et:"halb",es:"malo"},
-{et:"ilus",es:"bonito"},
-{et:"suur",es:"grande"},
-{et:"väike",es:"pequeño"},
-{et:"külm",es:"frío"},
-{et:"kuum",es:"caliente"},
-{et:"uus",es:"nuevo"},
-{et:"vana",es:"viejo"},
-{et:"kiire",es:"rápido"},
-{et:"aeglane",es:"lento"},
+{et:"laps",es:"niño"},
+{et:"ema",es:"madre"},
+{et:"isa",es:"padre"},
+{et:"vend",es:"hermano"},
+{et:"õde",es:"hermana"},
+{et:"inimene",es:"persona"},
+{et:"tüdruk",es:"chica"},
+{et:"poiss",es:"chico"},
+
+// grammatika / küsimused
 {et:"kus",es:"dónde"},
 {et:"mis",es:"qué"},
 {et:"kes",es:"quién"},
 {et:"millal",es:"cuándo"},
 {et:"miks",es:"por qué"},
+{et:"kuidas",es:"cómo"},
+{et:"siin",es:"aquí"},
+{et:"seal",es:"allí"},
+{et:"praegu",es:"ahora"},
+{et:"hiljem",es:"después"},
 
+// omadussõnad
+{et:"hea",es:"bueno"},
+{et:"halb",es:"malo"},
+{et:"ilus",es:"bonito"},
+{et:"suur",es:"grande"},
+{et:"väike",es:"pequeño"},
+{et:"uus",es:"nuevo"},
+{et:"vana",es:"viejo"},
+{et:"kiire",es:"rápido"},
+{et:"aeglane",es:"lento"},
+{et:"lihtne",es:"fácil"},
+
+// tegusõnad
 {et:"ma söön",es:"como"},
 {et:"ma joon",es:"bebo"},
 {et:"ma lähen",es:"voy"},
@@ -201,11 +217,10 @@ const words = [
 {et:"ma kuulen",es:"oigo"},
 {et:"ma räägin",es:"hablo"},
 {et:"ma õpin",es:"aprendo"},
-{et:"ma puhkan",es:"descanso"},
-{et:"ma loen",es:"leo"},
-{et:"ma kirjutan",es:"escribo"},
 {et:"ma töötan",es:"trabajo"},
+{et:"ma puhkan",es:"descanso"},
 
+// ajad ja kohad
 {et:"päev",es:"día"},
 {et:"öö",es:"noche"},
 {et:"hommik",es:"mañana"},
@@ -213,38 +228,30 @@ const words = [
 {et:"linn",es:"ciudad"},
 {et:"küla",es:"pueblo"},
 {et:"riik",es:"país"},
-{et:"pood",es:"tienda"},
-{et:"turg",es:"mercado"},
-{et:"restoran",es:"restaurante"},
-{et:"kohvik",es:"cafetería"},
-{et:"kool",es:"escuela"},
-{et:"ülikool",es:"universidad"},
+{et:"tee",es:"camino"},
+{et:"tänav",es:"calle"},
+{et:"kodu",es:"hogar"},
 
-{et:"laps",es:"niño"},
-{et:"ema",es:"madre"},
-{et:"isa",es:"padre"},
-{et:"vend",es:"hermano"},
-{et:"õde",es:"hermana"},
-
+// transport ja esemed
 {et:"auto",es:"coche"},
 {et:"buss",es:"autobús"},
 {et:"rong",es:"tren"},
 {et:"lennuk",es:"avión"},
-{et:"tänav",es:"calle"},
 {et:"uks",es:"puerta"},
 {et:"aken",es:"ventana"},
-{et:"voodi",es:"cama"},
 {et:"laud",es:"mesa"},
 {et:"tool",es:"silla"},
+{et:"voodi",es:"cama"},
 {et:"raamat",es:"libro"},
-{et:"telefon",es:"teléfono"},
 
+// lisa (mitte dubleerivad)
 {et:"muusika",es:"música"},
 {et:"film",es:"película"},
 {et:"ilm",es:"clima"},
 {et:"küsimus",es:"pregunta"},
 {et:"vastus",es:"respuesta"}
 ];
+``
 
 // KAARDID
 let shuffled=[],index=0,flipped=false;
