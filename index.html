@@ -7,32 +7,85 @@
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     text-align: center;
     padding: 20px;
 }
-.container { max-width: 420px; margin: auto; }
-button {
-    padding: 12px; margin: 8px; border: none;
-    border-radius: 10px; background: #ffcc00;
-    font-weight: bold; width: 90%;
+
+.container {
+    max-width: 420px;
+    margin: auto;
 }
+
+button {
+    padding: 12px;
+    margin: 8px;
+    border: none;
+    border-radius: 10px;
+    background: #ffcc00;
+    font-weight: bold;
+    width: 90%;
+}
+
 .card {
     background: rgba(0,0,0,0.3);
-    padding: 40px; border-radius: 15px;
-    font-size: 22px; margin-top: 15px;
+    padding: 40px;
+    border-radius: 15px;
+    font-size: 22px;
+    margin-top: 15px;
+    cursor: pointer;
 }
-.hidden { display: none; }
+
+.option {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.small {
+    margin-top: 10px;
+    font-size: 14px;
+}
 </style>
 </head>
 
 <body>
+
 <div class="container">
+
 <h2>🇪🇸 Hispaania õppeäpp</h2>
-<p>Kui sa näed seda, siis Pages töötab ✅</p>
+
+<div id="menu">
+    <button onclick="startCards()">📇 Kaardid</button>
+    <button onclick="startTest()">📝 Test</button>
 </div>
-</body>
-</html>
-``
+
+<!-- KAARDID -->
+<div id="cards" class="hidden">
+    <div class="card" id="cardBox" onclick="flipCard()">Laeb...</div>
+    <button onclick="nextCard()">Järgmine</button>
+    <p class="small" id="cardInfo"></p>
+</div>
+
+<!-- TEST -->
+<div id="test" class="hidden">
+    <p id="question"></p>
+    <div id="options"></div>
+    <p>Score: <span id="score">0</span></p>
+</div>
+
+</div>
+
+<script>
+// SÕNAVARA
+const words = [
+    {et:"tere", es:"hola"},
