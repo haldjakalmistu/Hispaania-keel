@@ -13,202 +13,26 @@ body {
     text-align: center;
     padding: 20px;
 }
-
-.container {
-    max-width: 420px;
-    margin: auto;
-}
-
+.container { max-width: 420px; margin: auto; }
 button {
-    padding: 12px;
-    margin: 8px;
-    border: none;
-    border-radius: 10px;
-    background: #ffcc00;
-    font-weight: bold;
-    width: 90%;
+    padding: 12px; margin: 8px; border: none;
+    border-radius: 10px; background: #ffcc00;
+    font-weight: bold; width: 90%;
 }
-
 .card {
     background: rgba(0,0,0,0.3);
-    padding: 40px;
-    border-radius: 15px;
-    font-size: 22px;
-    margin-top: 15px;
+    padding: 40px; border-radius: 15px;
+    font-size: 22px; margin-top: 15px;
 }
-
-.option {
-    display: block;
-    width: 100%;
-    margin: 6px 0;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-}
-
-.hidden { display:none; }
-
-.small {
-    margin-top: 10px;
-    font-size: 14px;
-}
+.hidden { display: none; }
 </style>
 </head>
 
 <body>
-
 <div class="container">
-
 <h2>🇪🇸 Hispaania õppeäpp</h2>
-
-<div id="menu">
-    <button onclick="startCards()">📇 Kaardid</button>
-    <button onclick="startTest()">📝 Test</button>
+<p>Kui sa näed seda, siis Pages töötab ✅</p>
 </div>
-
-<!-- CARDS -->
-<div id="cards" class="hidden">
-    <div class="card" id="cardBox" onclick="flipCard()">Laeb...</div>
-    <button onclick="nextCard()">Järgmine</button>
-    <p class="small" id="cardInfo"></p>
-</div>
-
-<!-- TEST -->
-<div id="test" class="hidden">
-    <p id="question"></p>
-    <div id="options"></div>
-    <p>Score: <span id="score">0</span></p>
-</div>
-
-</div>
-
-<script>
-
-// IGAPÄEVASED SÕNAD
-const words = [
-{et:"tere", es:"hola"},
-{et:"aitäh", es:"gracias"},
-{et:"palun", es:"por favor"},
-{et:"jah", es:"sí"},
-{et:"ei", es:"no"},
-{et:"vabandust", es:"perdón"},
-{et:"hüvasti", es:"adiós"},
-{et:"vesi", es:"agua"},
-{et:"toit", es:"comida"},
-{et:"maja", es:"casa"},
-{et:"töö", es:"trabajo"},
-{et:"sõber", es:"amigo"},
-{et:"pere", es:"familia"},
-{et:"auto", es:"coche"},
-{et:"raha", es:"dinero"},
-{et:"päev", es:"día"},
-{et:"öö", es:"noche"},
-{et:"aeg", es:"tiempo"},
-{et:"armastus", es:"amor"},
-{et:"elu", es:"vida"},
-{et:"hea", es:"bueno"},
-{et:"halb", es:"malo"},
-{et:"ilus", es:"bonito"},
-{et:"suur", es:"grande"},
-{et:"väike", es:"pequeño"},
-{et:"külm", es:"frío"},
-{et:"kuum", es:"caliente"},
-{et:"kus", es:"dónde"},
-{et:"mis", es:"qué"},
-{et:"kes", es:"quién"},
-{et:"kuidas", es:"cómo"},
-{et:"miks", es:"por qué"},
-{et:"ma söön", es:"como"},
-{et:"ma joon", es:"bebo"},
-{et:"ma lähen", es:"voy"},
-{et:"ma tulen", es:"vengo"},
-{et:"ma näen", es:"veo"},
-{et:"ma tahan", es:"quiero"},
-{et:"ma oskan", es:"puedo"}
-];
-
-// ---------- CARDS ----------
-let cardIndex = 0;
-let shuffledCards = [];
-let flipped = false;
-
-function startCards(){
-    document.getElementById("menu").classList.add("hidden");
-    document.getElementById("cards").classList.remove("hidden");
-
-    shuffledCards = [...words].sort(() => Math.random() - 0.5);
-    cardIndex = 0;
-
-    showCard();
-}
-
-function showCard(){
-    flipped = false;
-    let w = shuffledCards[cardIndex];
-    document.getElementById("cardBox").innerText = w.et;
-    document.getElementById("cardInfo").innerText = `${cardIndex+1} / ${shuffledCards.length}`;
-}
-
-function flipCard(){
-    let w = shuffledCards[cardIndex];
-    if(!flipped){
-        document.getElementById("cardBox").innerText = w.es;
-        flipped = true;
-    } else {
-        document.getElementById("cardBox").innerText = w.et;
-        flipped = false;
-    }
-}
-
-function nextCard(){
-    cardIndex++;
-    if(cardIndex >= shuffledCards.length){
-        alert("🎉 Kõik kaardid läbi!");
-        location.reload();
-    } else {
-        showCard();
-    }
-}
-
-// ---------- TEST ----------
-let score = 0;
-let current;
-
-function startTest(){
-    document.getElementById("menu").classList.add("hidden");
-    document.getElementById("test").classList.remove("hidden");
-    score = 0;
-    nextQuestion();
-}
-
-function nextQuestion(){
-    current = words[Math.floor(Math.random() * words.length)];
-    document.getElementById("question").innerText = current.et;
-
-    let options = [current.es];
-
-    while(options.length < 4){
-        let r = words[Math.floor(Math.random()*words.length)].es;
-        if(!options.includes(r)) options.push(r);
-    }
-
-    options.sort(() => Math.random() - 0.5);
-
-    let html = "";
-    options.forEach(o => {
-        html += `<button class="option" onclick="check('${o}')">${o}</button>`;
-    });
-
-    document.getElementById("options").innerHTML = html;
-}
-
-function check(ans){
-    if(ans === current.es) score++;
-    document.getElementById("score").innerText = score;
-    nextQuestion();
-}
-
-</script>
-
 </body>
 </html>
+``
